@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<script>
+
+const input = window.prompt(`please write your draw choice . rock , paper or scissors`).trim();
+
+function computerPlay() {
+ let r = Math.floor(Math.random()*10) ;
+switch(true) {
+	case r<3 :
+	return `Rock`;
+	break;
+
+	case ( r>=3 && r<6 ):
+	return `Paper`;
+	break;
+    
+    case r>=6 :
+    return `Scissors`;}
+}
+
+
+function playRound (playerSelection,computerSelection) {
+let p =	playerSelection.toLowerCase();
+let c =	computerSelection.toLowerCase();
+    if ( p !== `rock` && p !== `paper` && p !== `scissors`) { return `error ${p} is not a move` }
+	if (p === c) 
+{ return `Its a draw , you both drew ${p} ` }
+
+   else if ( p == `rock` && c == `paper` )
+{ return `You Lose! paper beats rock` } 
+
+else if ( p == `paper` && c == `scissors` )
+{ return `You Lose! scissors beats paper` }
+
+else if ( p == `Scissors` && c == `rock` )
+{ return `You Lose! rock beats scissors` } 
+
+else 
+{ return `You Won! ${p} beats ${c}` }
+
+}
+
+function game() {
+
+let humanPoint = 0 , botPoint = 0 ;
+
+  for (var i = 0; i < 5; i++) {
+	let result = playRound(input,computerPlay()); 		
+    console.log(result);
+    if (result.indexOf(`Won`) === 4 ) { humanPoint++ }; 
+    if (result.indexOf(`Lose`) === 4 ) { botPoint++ };
+  }
+return ( botPoint>humanPoint ) ? `You lost the game ${humanPoint} - ${botPoint} ` 
+     : ( botPoint<humanPoint ) ? `You won the game ${humanPoint} - ${botPoint} ` 
+     :  `its a draw !` ;
+}
+
+console.log(game());
+	
+	</script>
+</html>
