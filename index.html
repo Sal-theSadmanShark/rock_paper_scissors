@@ -1,29 +1,129 @@
 <!DOCTYPE html>
 <html>
-	<script>
+<head>
 
-const input = window.prompt(`please write your draw choice . rock , paper or scissors`).trim();
+  <meta charset="UTF-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1">		
+  <title>Rock Paper Scissors</title>	
+  <script src="https://kit.fontawesome.com/05a9990651.js" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="https://drive.google.com/thumbnail?id=1uWAtzmXyDGOTrUoG8oHFvCTLvyPDvAYQ" type="image/jpg" >
+  
+  <style>
+
+   	html { margin:0; padding: 0; box-sizing: border-box; }
+  	h1 { margin: auto; text-align: center; padding-bottom: 1vh; font-family: monospace; } 
+	main { 
+		display: flex;
+		-webkit-flex-wrap: wrap;
+		-moz-flex-wrap: wrap;
+		-ms-flex-wrap: wrap;
+		-o-flex-wrap: wrap;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		align-items: center;
+	}
+	main section { flex-basis: 33.33%; text-align: center; }
+	section div { margin:15px auto; }
+	footer { margin: auto; text-align: center; }
+	
+	i { font-size: 3rem; }
+	.human .container:hover { color :purple; transform: scale(1.2); }
+
+    @media only screen and (min-width: 800px) {
+		main section { flex-basis: 100%; justify-content: space-around;}
+		section { display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		margin: 36px auto;}
+	}
+	@media screen (min-width: 5rem) {
+		i { font-size: 7rem; } 	
+	}	 
+
+	 
+
+  </style>	
+</head>
+
+
+<body>
+	<h1>Choose an icon to Begin</h1>
+	
+	<main>
+	<section class="human">
+	 <div class="container" id="Prock">
+		<i class="far fa-hand-rock"></i>
+		<p>Rock</p>
+	 </div>
+	 <div class="container" id="Ppaper">
+		<i class="far fa-hand-paper"></i>
+		<p>Paper</p>	
+	 </div>
+	 <div class="container" id="Pscissors">
+		<i class="far fa-hand-peace"></i>
+		<p>Scissors</p>
+	 </div>		
+	</section>
+	
+	<section>
+		<p id="scoreboard" >you : 0 - 0 : bot</p>
+	</section>
+
+	<section class="bot">
+	 <div class="container" id="rock" >
+		<i class="fas fa-hand-rock"></i>
+		<p>Rock</p>
+	 </div>
+	 <div class="container" id="paper" >
+		<i class="fas fa-hand-paper"></i>
+		<p>Paper</p></div>
+	 <div class="container" id="scissors" >
+		<i class="fas fa-hand-peace"></i>
+		<p>Scissors</p></div>
+	</section>
+	</main>
+
+
+	<footer>
+		<p id="foot" >Ready to play , click on an icon to begin</p>
+	</footer>	
+
+<!-- Script starts here -->
+<script async="true" defer="true" >
+const inputRock = document.getElementById('Prock');
+const inputPaper = document.getElementById('Ppaper');
+const inputScissors = document.getElementById('Pscissors'); 
+const text = document.getElementById('foot');
+
+var humanPoint = 0 , botPoint = 0 ;
 
 function computerPlay() {
  let r = Math.floor(Math.random()*10) ;
+ let botPick;
 switch(true) {
 	case r<3 :
-	return `Rock`;
+	botPick = `rock`;
 	break;
 
 	case ( r>=3 && r<6 ):
-	return `Paper`;
+	botPick = `paper`;
 	break;
     
     case r>=6 :
-    return `Scissors`;}
+    botPick = `scissors`;}
+document.getElementById(botPick).animate([
+  // keyframes
+  { transform: 'scale(1.5)' }
+], { 
+  // timing options
+  duration: 500
+});
+return botPick;    
 }
 
-
-function playRound (playerSelection,computerSelection) {
-let p =	playerSelection.toLowerCase();
-let c =	computerSelection.toLowerCase();
-    if ( p !== `rock` && p !== `paper` && p !== `scissors`) { return `error ${p} is not a move` }
+function playRound (p,c) {
 	if (p === c) 
 { return `Its a draw , you both drew ${p} ` }
 
@@ -37,26 +137,33 @@ else if ( p == `Scissors` && c == `rock` )
 { return `You Lose! rock beats scissors` } 
 
 else 
-{ return `You Won! ${p} beats ${c}` }
-
+{ return `You Won! ${p} beats ${c}` ;}
 }
 
-function game() {
-
-let humanPoint = 0 , botPoint = 0 ;
-
-  for (var i = 0; i < 5; i++) {
-	let result = playRound(input,computerPlay()); 		
-    console.log(result);
-    if (result.indexOf(`Won`) === 4 ) { humanPoint++ }; 
-    if (result.indexOf(`Lose`) === 4 ) { botPoint++ };
-  }
-return ( botPoint>humanPoint ) ? `You lost the game ${humanPoint} - ${botPoint} ` 
-     : ( botPoint<humanPoint ) ? `You won the game ${humanPoint} - ${botPoint} ` 
-     :  `its a draw !` ;
+function score () {
+  let result = text.textContent;
+  if (result.indexOf(`Won`) === 4 ) { humanPoint++ ;}; 
+  if (result.indexOf(`Lose`) === 4 ) { botPoint++ ; };
+  document.getElementById(`scoreboard`).innerHTML = `you : ${humanPoint} - ${botPoint} : bot`;
 }
 
-console.log(game());
+ function game () {	
+ document.body.style.backgroundColor = `white`;	   
+	if (botPoint==5) { 
+		  botPoint = 0 ; humanPoint = 0; 
+		  document.body.style.backgroundColor = `gray`;
+	      return text.innerHTML = `The computer has beaten you ! click the icons to play again` ; 
+		}
+	if (humanPoint==5) { 
+		  botPoint = 0 ; humanPoint = 0; 
+		  document.body.style.backgroundColor = `violet`;
+	      return  text.innerHTML = `Hurray ! you've won the game . the bot is beaten. click the icons to play again` ;
+		}	   	
+} 
+   inputRock.onclick = function () { text.textContent = playRound(`rock`,computerPlay()); score(); game(); };
+   inputPaper.onclick = function () { text.textContent = playRound(`paper`,computerPlay()); score(); game(); };
+   inputScissors.onclick = function () { text.textContent = playRound(`scissors`,computerPlay()); score(); game(); };
 	
 	</script>
+</body>
 </html>
