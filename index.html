@@ -161,9 +161,9 @@ function score () {
 	      return  text.innerHTML = `Hurray ! you've won the game . the bot is beaten. click the icons to play again` ;
 		}	   	
 } 
-   inputRock.onclick = function () { text.textContent = playRound(`rock`,computerPlay()); score(); game(); };
-   inputPaper.onclick = function () { text.textContent = playRound(`paper`,computerPlay()); score(); game(); };
-   inputScissors.onclick = function () { text.textContent = playRound(`scissors`,computerPlay()); score(); game(); };
+   inputRock.addEventListener('click', function() { text.textContent = playRound(`rock`,computerPlay()); score(); game(); });
+   inputPaper.addEventListener('click', function() { text.textContent = playRound(`paper`,computerPlay()); score(); game(); });
+   inputScissors.addEventListener('click', function() { text.textContent = playRound(`scissors`,computerPlay()); score(); game();});
 	
 	</script>
 </body>
